@@ -1,0 +1,10 @@
+.main {
+  flex: 1 1 auto;
+}
+
+.title {
+  padding: 18px 20px;
+  font-size: 19px;
+  line-height: 21px;
+  border-bottom: 1px solid #31394c;
+}

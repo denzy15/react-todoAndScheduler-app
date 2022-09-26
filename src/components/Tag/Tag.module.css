@@ -1,0 +1,31 @@
+.tag {
+  border-radius: 17px;
+  padding: 1px 9px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.yellow {
+  color: #ff9f43;
+  background: rgba(255, 159, 67, 0.12);
+}
+
+.red {
+  color: #ea5455;
+  background: rgba(234, 84, 85, 0.12);
+}
+.green {
+	color: #28C76F;
+	background: rgba(40, 199, 111, 0.12);
+}
+.purple {
+	color: #7367F0;
+	background: rgba(39, 114, 8, 0.12);
+}
+
+.common{
+	background: rgba(39, 114, 8, 0.12);
+	color: rgb(0, 200, 255);
+}

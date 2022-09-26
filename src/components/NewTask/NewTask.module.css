@@ -1,0 +1,161 @@
+.modalWrapper {
+  min-width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.537);
+  color: #d0d2d6;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.modalContainer {
+  z-index: 10;
+  position: fixed;
+  background-color: #283046;
+  right: 0;
+  top: 0;
+  min-width: 25vw;
+  height: 100%;
+  overflow: auto;
+}
+
+.header {
+  background-color: #161d31;
+  display: flex;
+  align-items: center;
+  padding: 10px 25px;
+}
+
+.header h2 {
+  flex: 1 1 auto;
+  font-weight: 500;
+}
+
+.header button {
+  background: none;
+  margin-left: 10px;
+}
+
+.form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.form label {
+  display: block;
+  font-size: 12px;
+  line-height: 18px;
+  color: #b4b7bd;
+}
+
+.form input[type="text"] {
+  background: inherit;
+  padding: 7px 14px;
+  border: 1px solid #3b4253;
+  border-radius: 5px;
+  margin-top: 3px;
+  width: 100%;
+  color: #e0e0e0;
+  font-size: 12px;
+  line-height: 2;
+}
+
+.important {
+  display: flex;
+  gap: 10px;
+}
+
+.desc textarea {
+  border: 1px solid #3b4253;
+  border-radius: 5px;
+  background: inherit;
+  resize: none;
+  width: 100%;
+  min-height: 144px;
+  color: #e0e0e0;
+  font-size: 12px;
+  line-height: 2;
+  margin-top: 3px;
+  padding: 7px 14px;
+}
+
+.tags h3 {
+  font-size: 12px;
+  line-height: 18px;
+  color: #b4b7bd;
+  margin-bottom: 15px;
+}
+
+.tagsRow {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 20%;
+  padding: 5px 0;
+}
+
+.tagsRow label {
+  flex: 0 1 40%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.date label {
+  margin-bottom: 5px;
+}
+
+
+
+
+
+.btns {
+  display: flex;
+  gap: 20px;
+}
+
+.btns button {
+  padding: 10px 23px;
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  letter-spacing: 0.4px;
+}
+
+.btns button:first-child {
+  background: #7367f0;
+  color: #ffffff;
+}
+.btns button:last-child {
+  color: #7367f0;
+  border: 1px solid #7367f0;
+  border-radius: 5px;
+  background-color: inherit;
+}
+
+.error {
+  font-size: 12px;
+  line-height: 120%;
+  color: #eb5757;
+  font-weight: 400;
+}
+
+textarea.redBorder{
+  border: 1px solid #EB5757;
+}
+
+.redBorder{
+  border: 1px solid #EB5757;
+}
+
+.redBorder::placeholder{
+  color: #EB5757;
+}
