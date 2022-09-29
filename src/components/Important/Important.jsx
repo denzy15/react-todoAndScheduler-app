@@ -36,7 +36,7 @@ const Important = () => {
   useEffect(() => {
     setMore({ ...more, hasMore: filteredTodos.length > 5 });
     setDraggableTodos(filteredTodos);
-  }, [todos]);
+  }, [todos, filters]);
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;

@@ -111,10 +111,6 @@
   margin-bottom: 5px;
 }
 
-
-
-
-
 .btns {
   display: flex;
   gap: 20px;
@@ -158,4 +154,22 @@ textarea.redBorder{
 
 .redBorder::placeholder{
   color: #EB5757;
+}
+
+@media screen and (max-width: 520px) {
+  .modalContainer{
+    width: 100%;
+  }
+
+  .tagsRow {
+      display: block;
+      padding: 5px 0;
+    }
+  
+    .tagsRow label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 17px;
+    }
 }

@@ -42,6 +42,7 @@
   line-height: 18px;
   color: #676d7d;
   flex: 0 1;
+  white-space: nowrap;
 }
 
 .delete, .undo {
@@ -55,3 +56,21 @@
 }
 
 
+
+
+@media screen and (max-width: 768px) {
+  .taskItem{
+    overflow-x: auto;
+  }
+}
+
+
+@media screen and (max-width: 520px) {
+  .taskItem {
+    padding: 10px 12px 15px;
+  }
+
+  .title{
+    white-space: nowrap;
+  }
+}

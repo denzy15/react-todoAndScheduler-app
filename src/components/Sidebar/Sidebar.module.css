@@ -143,13 +143,13 @@ a.active rect {
   }
 
   .nav li {
-    flex: 0 1;
+    flex: 0 1 50%;
     padding: 7px 20px;
     text-align: center;
   }
 
   .nav li a{
-    display: block;
+    justify-content: center;
   }
 
 
@@ -192,13 +192,15 @@ a.active rect {
   }
   .activeFilter {
     border: none;
-    color: #9b51e0;
     padding: 0;
-    
+    color: #9b51e0;
   }
 
   #li.activeFilter::before {
     left: -23px;
+    box-sizing: content-box;
+    border: 2px solid #9b51e0;
+
   }
 }
 
@@ -212,10 +214,13 @@ a.active rect {
   }
   .nav li{
     flex: 0 1 50%;
+    padding: 5px;
+    font-size: 12px;
   }
 
   .nav li a{
     display: flex;
     gap: 5px;
   }
+   
 }
