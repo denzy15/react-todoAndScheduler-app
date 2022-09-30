@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { icons } from "../../icons/icons";
 import c from "./TaskItem.module.css";
@@ -12,26 +12,25 @@ import { Draggable } from "react-beautiful-dnd";
 const TaskItem = (props) => {
   let dispatch = useDispatch();
   const location = useLocation();
+
+  //making the task id a separate constant
   const id = props.id;
 
+  //Search query
   const query = props.query || "";
 
+  //state for opening a modal window to edit a task
   const [taskModal, setTaskModal] = useState(false);
+
+  //state for opening a modal window to confirm deletion
   const [deletionModal, setDeletionModal] = useState(false);
 
+  //function to convert date from state to beautiful string
   function dateToStr() {
     let date = props.endingDate.split("T");
     const time = date[1].slice(0, -5);
     let day = date[0].split("-").join(".");
     return `${time} / ${day}`;
-  }
-
-  function undoTaskHandler() {
-    dispatch(undoTodo({ id }));
-  }
-
-  function doneHandler() {
-    dispatch(toggleIsDone({ id }));
   }
 
   function highlightQueryText() {
@@ -54,6 +53,15 @@ const TaskItem = (props) => {
     );
   }
 
+  //handlers
+  function undoTaskHandler() {
+    dispatch(undoTodo({ id }));
+  }
+
+  function doneHandler() {
+    dispatch(toggleIsDone({ id }));
+  }
+
   return (
     <section>
       <Draggable draggableId={props.id} index={props.index}>
@@ -61,7 +69,6 @@ const TaskItem = (props) => {
           <li
             className={c.taskItem}
             ref={provided.innerRef}
-            {...provided.dragHandleProps}
             {...provided.draggableProps}
           >
             {!props.isDeleted && (
@@ -71,22 +78,27 @@ const TaskItem = (props) => {
                 defaultChecked={props.isDone}
               />
             )}
+
             <span
               onClick={() => setTaskModal(true)}
               className={`${c.title} ${
                 location.pathname !== "/important" && props.isImportant === true
                   ? c.yellowTitle
                   : null
+                //classname yellowTitle is needed for highlighting importand tasks in all lists except 'Important' list
               }`}
             >
               {props.query === "" ? props.title : highlightQueryText()}
             </span>
+
             <ul className={c.tags}>
               {props.tags.map((t) => (
                 <Tag name={t} key={props.id + Math.random()} />
               ))}
             </ul>
+
             <div className={c.date}>{dateToStr()}</div>
+
             {props.isDeleted ? (
               <button onClick={undoTaskHandler} className={c.undo}>
                 {icons.undo}
@@ -99,12 +111,18 @@ const TaskItem = (props) => {
                 >
                   {icons.delete}
                 </button>
-                <div className={c.drag}>{icons.drag} </div>
+                <div className={c.drag} {...provided.dragHandleProps}>
+                  {icons.drag}{" "}
+                </div>
               </div>
             )}
           </li>
         )}
       </Draggable>
+
+      {
+        //modal tasks (hidden by default)
+      }
       {taskModal && <NewTask closeModal={setTaskModal} currentTask={props} />}
       {deletionModal && (
         <DeleteConfirm

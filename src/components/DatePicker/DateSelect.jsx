@@ -7,9 +7,11 @@ import "./extraDateSelect.css";
 import React from "react";
 import { icons } from "../../icons/icons";
 
+//display calendar in russian 
 registerLocale("ru", ru);
 
 const DateSelect = (props) => {
+
   function onDateChange(date) {
     props.setSelected(true);
     props.setTask({ ...props.task, endingDate: date });
