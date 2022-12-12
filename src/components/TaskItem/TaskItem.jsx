@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { icons } from "../../icons/icons";
 import c from "./TaskItem.module.css";
-import { toggleIsDone, undoTodo } from "../../store/todoSlice";
+import {
+  deleteTodo,
+  hideTodo,
+  toggleIsDone,
+  undoTodo,
+} from "../../store/todoSlice";
 import { useLocation } from "react-router-dom";
 import Tag from "../Tag/Tag";
 import NewTask from "../NewTask/NewTask";
@@ -27,6 +32,7 @@ const TaskItem = (props) => {
 
   //function to convert date from state to beautiful string
   function dateToStr() {
+    if (props.endingDate === null) return "";
     let date = props.endingDate.split("T");
     const time = date[1].slice(0, -5);
     let day = date[0].split("-").join(".");
@@ -59,7 +65,9 @@ const TaskItem = (props) => {
   }
 
   function doneHandler() {
-    dispatch(toggleIsDone({ id }));
+    setTimeout(() => {
+      dispatch(toggleIsDone({ id }));
+    }, 300);
   }
 
   return (
@@ -100,13 +108,28 @@ const TaskItem = (props) => {
             <div className={c.date}>{dateToStr()}</div>
 
             {props.isDeleted ? (
-              <button onClick={undoTaskHandler} className={c.undo}>
-                {icons.undo}
-              </button>
+              <div className={c.btns}>
+                <button
+                  onClick={() => {
+                    setDeletionModal(true);
+                  }}
+                  className={c.delete}
+                >
+                  {icons.delete}
+                </button>
+                <button onClick={undoTaskHandler} className={c.undo}>
+                  {icons.undo}
+                </button>
+                <div className={c.drag} {...provided.dragHandleProps}>
+                  {icons.drag}{" "}
+                </div>
+              </div>
             ) : (
               <div className={c.btns}>
                 <button
-                  onClick={() => setDeletionModal(true)}
+                  onClick={() => {
+                    dispatch(hideTodo({ id }));
+                  }}
                   className={c.delete}
                 >
                   {icons.delete}

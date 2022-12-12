@@ -8,16 +8,12 @@ import c from "./DeleteConfirm.module.css";
 const DeleteConfirm = (props) => {
   const dispatch = useDispatch();
 
-  const location = useLocation().pathname;
+  //const location = useLocation().pathname;
 
   function deleteHandler() {
     if (props.id) {
       const id = props.id;
-      if (location === "/deleted") {
-        dispatch(deleteTodo({ id }));
-      } else {
-        dispatch(hideTodo({ id }));
-      }
+      dispatch(deleteTodo({ id }));
     }
 
     if (props.closeParentModal) {

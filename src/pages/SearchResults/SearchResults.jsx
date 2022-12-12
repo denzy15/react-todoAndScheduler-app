@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
-import TaskItem from "../TaskItem/TaskItem";
+import TaskItem from "../../components/TaskItem/TaskItem";
 
 const SearchResults = (props) => {
   const todos = useSelector((state) => state.todos.todos);

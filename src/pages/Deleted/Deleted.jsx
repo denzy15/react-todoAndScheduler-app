@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
-import ShowMoreButton from "../ShowMoreButton/ShowMoreButton";
-import TaskItem from "../TaskItem/TaskItem";
-import c from "./Done.module.css";
+import ShowMoreButton from "../../components/ShowMoreButton/ShowMoreButton";
+import TaskItem from "../../components/TaskItem/TaskItem";
+import c from "./Deleted.module.css";
 
-const Done = () => {
+const Deleted = () => {
   const todos = useSelector((state) => state.todos.todos);
   const filters = useSelector((state) => state.filters.filters);
 
   const filteredTodos = todos.filter((todo) => {
     if (filters.length === 0) {
-      return todo.isDeleted === false && todo.isDone === true;
+      return todo.isDeleted === true;
     } else {
       return (
-        todo.isDeleted === false &&
-        todo.isDone === true &&
+        todo.isDeleted === true &&
         filters.every((tag) => todo.tags.includes(tag))
       );
     }
@@ -44,9 +43,9 @@ const Done = () => {
   }
 
   return (
-    <div className={c.myTasks}>
+    <div className={c.deleted}>
       {filteredTodos.length === 0 ? (
-        <div style={{ padding: "10px 20px" }}>Нет выполненых задач</div>
+        <div style={{ padding: "10px 20px" }}>Пусто</div>
       ) : (
         <DragDropContext
           onDragEnd={handleOnDragEnd}
@@ -78,4 +77,4 @@ const Done = () => {
   );
 };
 
-export default Done;
+export default Deleted;

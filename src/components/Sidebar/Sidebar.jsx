@@ -68,7 +68,7 @@ const Sidebar = () => {
       </ul>
 
       <div className={c.tags}>
-        <h5>Тэги</h5>
+        <h5>Фильтр по тэгам:</h5>
         <ul className={c.tagsCol}>
           <li onClick={selectTagHandler} id={c.li}>
             Продуктивность

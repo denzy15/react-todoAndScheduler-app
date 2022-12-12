@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import c from "./Main.module.css";
 import { Route, Routes, Navigate } from "react-router-dom";
-import Tasks from "../Tasks/Tasks";
-import Important from "../Important/Important";
-import Done from "../Done/Done";
-import Deleted from "../Deleted/Deleted";
+import Tasks from "../../pages/Tasks/Tasks";
+import Important from "../../pages/Important/Important";
+import Done from "../../pages/Done/Done";
+import Deleted from "../../pages/Deleted/Deleted";
 import { useLocation } from "react-router-dom";
 import Searchbar from "../Searchbar/Searchbar";
-import SearchResults from "../SearchResults/SearchResults";
+import SearchResults from "../../pages/SearchResults/SearchResults";
 
 const Main = () => {
   const name = {

@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
-import ShowMoreButton from "../ShowMoreButton/ShowMoreButton";
-import TaskItem from "../TaskItem/TaskItem";
-import c from "./Important.module.css";
+import ShowMoreButton from "../../components/ShowMoreButton/ShowMoreButton";
+import TaskItem from "../../components/TaskItem/TaskItem";
+import c from "./Tasks.module.css";
 
-const Important = () => {
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+
+const Tasks = () => {
   const todos = useSelector((state) => state.todos.todos);
   const filters = useSelector((state) => state.filters.filters);
 
   const filteredTodos = todos.filter((todo) => {
     if (filters.length === 0) {
-      return (
-        todo.isImportant === true &&
-        todo.isDeleted === false &&
-        todo.isDone === false
-      );
+      return todo.isDeleted === false && todo.isDone === false;
     } else {
       return (
-        todo.isImportant === true &&
         todo.isDeleted === false &&
         todo.isDone === false &&
         filters.every((tag) => todo.tags.includes(tag))
@@ -27,7 +23,7 @@ const Important = () => {
   });
 
   const [more, setMore] = useState({
-    hasMore: filteredTodos.length > 5,
+    hasMore: false,
     isOpened: false,
   });
 
@@ -57,12 +53,12 @@ const Important = () => {
           onDragEnd={handleOnDragEnd}
           onBeforeDragStart={() => setMore({ ...more, isOpened: true })}
         >
-          <Droppable droppableId="important">
+          <Droppable droppableId="tasks">
             {(provided) => (
               <ul {...provided.droppableProps} ref={provided.innerRef}>
                 {draggableTodos.map((t, i) => {
-                  if (i > 4) return null;
-                  return <TaskItem key={t.id} {...t} index={i} />;
+                  if (i <= 4) return <TaskItem {...t} key={t.id} index={i} />;
+                  return null;
                 })}
 
                 {more.isOpened &&
@@ -83,4 +79,4 @@ const Important = () => {
   );
 };
 
-export default Important;
+export default Tasks;

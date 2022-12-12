@@ -7,11 +7,9 @@ const todoSlice = createSlice({
   },
   reducers: {
     addTodo(state, action) {
-      debugger;
       state.todos.push({
         id: (Date.now() + Math.random()).toFixed(0),
         title: action.payload.title,
-        strDate: action.payload.strDate,
         isDone: false,
         isImportant: action.payload.isImportant,
         isDeleted: false,

@@ -11,7 +11,6 @@ import DeleteConfirm from "../DeleteConfirm/DeleteConfirm";
 const NewTask = (props) => {
   const dispatch = useDispatch();
 
-
   const currentTask = props.currentTask;
 
   const [task, setTask] = useState({
@@ -19,16 +18,13 @@ const NewTask = (props) => {
     strDate: "",
     isImportant: false,
     tags: [],
-    endingDate: new Date(),
+    endingDate: null,
     description: "",
   });
 
   const [errors, setErrors] = useState({
     title: "",
-    strDate: "",
     endingDate: "",
-    description: "",
-    tags: "",
   });
 
   const [deletionModal, setDeletionModal] = useState(false);
@@ -55,24 +51,17 @@ const NewTask = (props) => {
       setErrors({ ...errors, title: "Строка не должна быть пустой" });
       isValid = false;
     }
-    if (!task.strDate) {
-      setErrors({ ...errors, strDate: "Строка не должна быть пустой" });
-      isValid = false;
-    }
-    if (!selectedDate) {
-      setErrors({ ...errors, endingDate: "Выберите дату" });
-      isValid = false;
-    }
 
-    if (!task.description) {
-      setErrors({ ...errors, description: "Строка не должна быть пустой" });
+    if (
+      task.endingDate !== null &&
+      task.endingDate.toISOString() < new Date().toISOString()
+    ) {
+      setErrors({
+        ...errors,
+        endingDate: "Вы не можете день, который уже прошел",
+      });
       isValid = false;
     }
-    if (task.tags.length === 0) {
-      setErrors({ ...errors, tags: "Выберите хотя бы 1 тег" });
-      isValid = false;
-    }
-
     return isValid;
   }
 
@@ -98,7 +87,10 @@ const NewTask = (props) => {
         const id = currentTask.id;
         dispatch(deleteTodo({ id }));
       }
-      dispatch(addTodo({ ...task, endingDate: task.endingDate.toISOString() }));
+
+      task.endingDate =
+        task.endingDate == null ? null : task.endingDate.toISOString();
+      dispatch(addTodo({ ...task, endingDate: task.endingDate }));
       setTask({
         title: "",
         isImportant: false,
@@ -115,7 +107,6 @@ const NewTask = (props) => {
       <div className={c.modalContainer}>
         <div className={c.header}>
           <h2>Задача</h2>
-          <button>{icons.star}</button>
           <button onClick={() => props.closeModal(false)}>{icons.close}</button>
         </div>
         <div className={c.form}>
@@ -130,26 +121,15 @@ const NewTask = (props) => {
             />
             {errors.title && <span className={c.error}>{errors.title}</span>}
           </div>
-          <div className={c.strDate}>
-            <label>Дата завершения задачи</label>
-            <input
-              className={errors.strDate && c.redBorder}
-              type="text"
-              placeholder="Названия задачи"
-              value={task.strDate}
-              onChange={(e) => setTask({ ...task, strDate: e.target.value })}
-            />
-            {errors.strDate && (
-              <span className={c.error}>{errors.strDate}</span>
-            )}
-          </div>
           <div className={c.important}>
-            <input
-              onChange={isImportantHandler}
-              type="checkbox"
-              checked={task.isImportant}
-            />
-            <label>Важная задача</label>
+            <label>
+              <input
+                onChange={isImportantHandler}
+                type="checkbox"
+                checked={task.isImportant}
+              />
+              Важная задача
+            </label>
           </div>
 
           <div className={`${c.date} ${errors.endingDate && c.redBorder}`}>
@@ -174,16 +154,10 @@ const NewTask = (props) => {
                 setTask({ ...task, description: e.target.value })
               }
             ></textarea>
-            {errors.description && (
-              <span className={c.error}>{errors.description}</span>
-            )}
           </div>
           <article className={c.tags}>
             <h3>Тэги</h3>
-            <div
-              className={`${c.tagsRow} ${errors.title && c.redBorder}`}
-              onChange={checkboxTagHandler}
-            >
+            <div className={c.tagsRow} onChange={checkboxTagHandler}>
               <label>
                 <input
                   type="checkbox"
