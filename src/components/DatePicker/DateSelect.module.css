@@ -1,0 +1,30 @@
+.datepicker {
+  border-radius: 5px;
+  color: #676d7d;
+  position: relative;
+  line-height: 24px;
+  height: 38px;
+}
+
+.datepicker > div > div {
+  position: static;
+}
+
+.datepicker svg {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.selectedDate{
+	color: #fff;
+}
+
+.time{
+  color: red;
+}
+
+.weekend{
+  color: #676D7D;
+}

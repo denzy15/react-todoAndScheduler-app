@@ -1,0 +1,74 @@
+.deleteModal {
+  min-width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.537);
+  color: #d0d2d6;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.container {
+  position: fixed;
+  background: #283046;
+  border-radius: 6px;
+  right: 50%;
+  top: 50%;
+  transform: translate(50%, -50%);
+  width: 35%;
+  min-height: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 43px 20px;
+}
+
+.container svg {
+  height: 80px;
+  width: 80px;
+}
+
+.title {
+  font-size: 21px;
+  line-height: 26px;
+  margin: 18px 0px 6px 0px;
+}
+
+.subtitle {
+  line-height: 21px;
+  color: #b4b7bd;
+}
+
+.btns {
+  display: flex;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.btns button {
+  padding: 10px 22px;
+  border-radius: 5px;
+  letter-spacing: 0.4px;
+}
+
+.delete {
+  background: #7367f0;
+  color: #fff;
+}
+
+.cancel {
+  color: #ea5455;
+  border: 1px solid #ea5455;
+  background: none;
+}
+
+@media screen and (max-width: 768px) {
+  .container{
+    width: 90%;
+    min-height: 50%;
+  }
+}

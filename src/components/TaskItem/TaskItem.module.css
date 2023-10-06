@@ -1,0 +1,85 @@
+.taskItem {
+  display: flex;
+  padding: 18px 20px;
+  border-bottom: 1px solid #31394c;
+  align-items: center;
+  gap: 20px;
+}
+
+.taskItem:hover{
+  background: #242C43;
+}
+
+.title {
+  flex: 1 1 auto;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.yellowTitle{
+  color: #F2C94C;
+}
+
+.tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  
+}
+
+.tag {
+  border-radius: 17px;
+  padding: 1px 9px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.date {
+  
+  line-height: 18px;
+  flex: 0 1;
+  white-space: nowrap;
+}
+
+.endDate{
+  color: #bba1dd;
+  font-size: 14.5px;
+}
+
+.startDate{
+  color: #d8b8fdb2;
+  font-size: 13px;
+}
+
+.delete, .undo {
+  background: none;
+  height: 20px;
+}
+
+.btns {
+  display: flex;
+  gap: 20px;
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+  .taskItem{
+    overflow-x: auto;
+  }
+}
+
+
+@media screen and (max-width: 520px) {
+  .taskItem {
+    padding: 10px 12px 15px;
+  }
+
+  .title{
+    white-space: nowrap;
+  }
+}
