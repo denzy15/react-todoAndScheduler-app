@@ -34,6 +34,13 @@ const TaskItem = (props) => {
     return new Date(date).toLocaleString()
   }
 
+  useEffect(() => {
+    
+  
+    
+  }, [props.query])
+  
+
   function highlightQueryText() {
     const parts = props.title.split(new RegExp(`(${query})`, "gi"));
     return (
@@ -94,14 +101,14 @@ const TaskItem = (props) => {
                 //classname yellowTitle is needed for highlighting importand tasks in all lists except 'Important' list
               }`}
             >
-              {props.query === "" ? props.title : highlightQueryText()}
+              {location.pathname === "/search" && query !== "" ? props.title : highlightQueryText()}
             </span>
 
             
 
             <div className={`${c.startDate} ${c.date}`}> с {dateToStr(props.startDate)}</div>
 
-            <div className={`${c.endDate} ${c.date}`}>до {dateToStr(props.endingDate)}</div>
+            <div className={`${c.endDate} ${c.date}`}>до {dateToStr(props.endDate)}</div>
 
             {props.isDeleted ? (
               <div className={c.btns}>

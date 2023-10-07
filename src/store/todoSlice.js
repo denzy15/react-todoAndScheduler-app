@@ -14,7 +14,7 @@ const todoSlice = createSlice({
         isImportant: action.payload.isImportant,
         isDeleted: false,
         startDate: action.payload.startDate.toString(),
-        endingDate: action.payload.endingDate.toString(),
+        endDate: action.payload.endDate.toString(),
         description: action.payload.description,
       });
     },

@@ -11,6 +11,7 @@ const Tasks = (props) => {
   const path = useLocation().pathname
   const todos = useSelector((state) => state.todos.todos);
   const navigate = useNavigate()
+  
 
   const [filteredTodos, setFilteredTodos] = useState([])
 

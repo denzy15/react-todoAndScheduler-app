@@ -12,9 +12,10 @@ const initialTask = {
   title: "",
   isImportant: false,
   startDate: new Date(),
-  endingDate: new Date(new Date().getTime() + 86400000),
+  endDate: new Date(new Date().getTime() + 86400000),
   description: "",
 }
+
 const TaskEdit = (props) => {
   const dispatch = useDispatch();
 
@@ -26,7 +27,7 @@ const TaskEdit = (props) => {
 
   const [errors, setErrors] = useState({
     title: "",
-    endingDate: "",
+    endDate: "",
   });
 
 
@@ -42,7 +43,7 @@ const TaskEdit = (props) => {
         strDate: currentTask.strDate,
         isImportant: currentTask.isImportant,
         startDate: new Date(currentTask.startDate),
-        endingDate: new Date(currentTask.endingDate),
+        endDate: new Date(currentTask.endDate),
         description: currentTask.description,
       });
       
@@ -63,12 +64,12 @@ const TaskEdit = (props) => {
     }
 
     // if (
-    //   task.endingDate !== null &&
-    //   task.endingDate.toISOString() < new Date().toISOString()
+    //   task.endDate !== null &&
+    //   task.endDate.toISOString() < new Date().toISOString()
     // ) {
     //   setErrors({
     //     ...errors,
-    //     endingDate: "Вы не можете выбрать день, который уже прошел",
+    //     endDate: "Вы не можете выбрать день, который уже прошел",
     //   });
     //   isValid = false;
     // }
@@ -81,15 +82,13 @@ const TaskEdit = (props) => {
       : setTask({ ...task, isImportant: false });
   }
 
-  console.log(new Date(task.endingDate.toString()).getDate());
-
   function onTaskAdd() {
     if (validate()) {
       if (currentTask) {
         const id = currentTask.id;
         dispatch(deleteTodo({ id }));
       }
-      dispatch(addTodo({ ...task, endingDate: task.endingDate }));
+      dispatch(addTodo({ ...task, endDate: task.endDate }));
       setTask(initialTask);
       props.closeModal(false);
     }
@@ -128,16 +127,16 @@ const TaskEdit = (props) => {
           <div className={c.date}>
             <label>Дата и время начала</label>
             <MyDatePicker name={'startDate'} change={onDateChange} selected={task.startDate}/>
-            {errors.endingDate && (
-              <span className={c.error}>{errors.endingDate}</span>
+            {errors.endDate && (
+              <span className={c.error}>{errors.endDate}</span>
             )}
           </div>
 
-          <div className={`${c.date} ${errors.endingDate && c.redBorder}`}>
+          <div className={`${c.date} ${errors.endDate && c.redBorder}`}>
             <label>Дата и время окончания</label>
-            <MyDatePicker name={'endingDate'} change={onDateChange} selected={task.endingDate}/>
-            {errors.endingDate && (
-              <span className={c.error}>{errors.endingDate}</span>
+            <MyDatePicker name={'endDate'} change={onDateChange} selected={task.endDate}/>
+            {errors.endDate && (
+              <span className={c.error}>{errors.endDate}</span>
             )}
           </div>
           <div className={c.desc}>
