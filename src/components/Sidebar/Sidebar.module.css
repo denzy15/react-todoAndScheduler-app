@@ -36,6 +36,14 @@ a.active rect {
   fill: #9b51e0;
 }
 
+a.active svg {
+  stroke: #9b51e0;
+}
+
+a.calendar svg {
+  stroke: #fff;
+}
+
 .nav {
   margin: 20px 0;
 }
@@ -60,61 +68,12 @@ a.active rect {
   background: #7367f0;
 }
 
-.tags {
-  padding: 0 45px;
-}
-
-.tags h5 {
-  margin-left: -22px;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 23px;
-  color: #b9b9c3;
-  margin-bottom: 17px;
-}
-.tags li:not(:last-child) {
-  margin-bottom: 17px;
-}
-
-.tags li {
-  position: relative;
-  cursor: pointer;
-}
-.tags li:hover {
-  transition: color 0.3s;
-  color: #828282;
-}
-
-.tags li::before {
-  content: "";
-  position: absolute;
-  left: -23px;
-  top: 50%;
-  transform: translate(0, -70%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.tags li:nth-child(1)::before {
-  background: #7367f0;
-}
-.tags li:nth-child(2)::before {
-  background: #28c76f;
-}
-.tags li:nth-child(3)::before {
-  background: #ff9f43;
-}
-.tags li:nth-child(4)::before {
-  background: #ea5455;
-}
-
-.activeFilter{
+.activeFilter {
   font-weight: 700;
 }
 
 .activeFilter::after {
-  content: '';
+  content: "";
   position: absolute;
   right: 0;
   bottom: -2px;
@@ -123,7 +82,6 @@ a.active rect {
   height: 100%;
   background-color: #7367f0;
 }
-
 
 @media screen and (max-width: 768px) {
   .sidebar {
@@ -155,10 +113,9 @@ a.active rect {
     text-align: center;
   }
 
-  .nav li a{
+  .nav li a {
     justify-content: center;
   }
-
 
   .nav li > .active::before {
     content: "";
@@ -170,53 +127,25 @@ a.active rect {
     top: 100%;
   }
 
-  .newTask{
+  .newTask {
     align-self: start;
     padding: 7px 15px;
   }
-
-  .tags{
-    order: 3;
-    width: 100%;
-    padding: 0;
-  }
-
-  .tags h5{
-    text-align: center;
-    font-size: 15px;
-  }
-
-  .tagsCol {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    padding: 0 10px 0 53px;
-    justify-content: space-between;
-  }
-
-  .tagsCol li {
-    flex: 0 1 50%;
-  }
-  
 }
 
 @media screen and (max-width: 520px) {
-  .tagsCol li{
-    flex: 0 1 100%;
-  }
-
   .nav {
     flex-wrap: wrap;
   }
-  .nav li{
+
+  .nav li {
     flex: 0 1 50%;
     padding: 5px;
     font-size: 12px;
   }
 
-  .nav li a{
+  .nav li a {
     display: flex;
     gap: 5px;
   }
-   
 }

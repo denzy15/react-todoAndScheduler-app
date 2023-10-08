@@ -1,14 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { icons } from "../../icons/icons";
-import { deleteTodo, hideTodo } from "../../store/todoSlice";
+import { deleteTodo } from "../../store/todoSlice";
 import c from "./DeleteConfirm.module.css";
 
 const DeleteConfirm = (props) => {
   const dispatch = useDispatch();
-
-  //const location = useLocation().pathname;
 
   function deleteHandler() {
     if (props.id) {

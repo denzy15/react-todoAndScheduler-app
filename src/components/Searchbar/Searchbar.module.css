@@ -1,5 +1,5 @@
 .searchbar{
-	padding: 18px 40px 18px 0;
+	padding: 0 40px;
 	border-bottom: 1px solid #31394C;
 	border-top: 1px solid #31394C;
 	width: 100%;
@@ -11,6 +11,10 @@
 	background: inherit;
 	padding-left: 70px;
 	color: #B9B9C3;
+	display: block;
+	width: 100%;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 .searchbar svg{

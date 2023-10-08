@@ -1,6 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import todoReducer from "./todoSlice";
-import filterReducer from "./filterSlice";
 
 import {
   persistStore,
@@ -16,7 +15,6 @@ import storage from "redux-persist/lib/storage";
 
 const rootReducer = combineReducers({
   todos: todoReducer,
-  filters: filterReducer,
 });
 
 const persistConfig = {

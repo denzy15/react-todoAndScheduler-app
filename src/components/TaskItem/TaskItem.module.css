@@ -20,29 +20,22 @@
   color: #F2C94C;
 }
 
-.tags {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: flex-end;
-  
-}
-
-.tag {
-  border-radius: 17px;
-  padding: 1px 9px;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 18px;
-  text-align: center;
-}
 
 .date {
-  font-size: 12px;
+  
   line-height: 18px;
-  color: #676d7d;
   flex: 0 1;
   white-space: nowrap;
+}
+
+.endDate{
+  color: #bba1dd;
+  font-size: 14.5px;
+}
+
+.startDate{
+  color: #d8b8fdb2;
+  font-size: 13px;
 }
 
 .delete, .undo {

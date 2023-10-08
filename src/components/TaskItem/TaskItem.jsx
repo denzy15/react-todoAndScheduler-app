@@ -1,18 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { icons } from "../../icons/icons";
 import c from "./TaskItem.module.css";
-import {
-  deleteTodo,
-  hideTodo,
-  toggleIsDone,
-  undoTodo,
-} from "../../store/todoSlice";
+import { hideTodo, toggleIsDone, undoTodo } from "../../store/todoSlice";
 import { useLocation } from "react-router-dom";
-import Tag from "../Tag/Tag";
-import NewTask from "../NewTask/NewTask";
+import TaskEdit from "../TaskEdit/TaskEdit";
 import DeleteConfirm from "../DeleteConfirm/DeleteConfirm";
 import { Draggable } from "react-beautiful-dnd";
+import { highlightQueryText } from "../../utils";
 
 const TaskItem = (props) => {
   let dispatch = useDispatch();
@@ -31,33 +26,10 @@ const TaskItem = (props) => {
   const [deletionModal, setDeletionModal] = useState(false);
 
   //function to convert date from state to beautiful string
-  function dateToStr() {
-    if (props.endingDate === null) return "";
-    let date = props.endingDate.split("T");
-    const time = date[1].slice(0, -5);
-    let day = date[0].split("-").join(".");
-    return `${time} / ${day}`;
+  function dateToStr(date) {
+    return new Date(date).toLocaleString();
   }
-
-  function highlightQueryText() {
-    const parts = props.title.split(new RegExp(`(${query})`, "gi"));
-    return (
-      <span>
-        {parts.map((part, i) => (
-          <span
-            key={i}
-            style={
-              part.toLowerCase() === query.toLowerCase()
-                ? { fontWeight: "bold" }
-                : {}
-            }
-          >
-            {part}
-          </span>
-        ))}{" "}
-      </span>
-    );
-  }
+  
 
   //handlers
   function undoTaskHandler() {
@@ -67,7 +39,7 @@ const TaskItem = (props) => {
   function doneHandler() {
     setTimeout(() => {
       dispatch(toggleIsDone({ id }));
-    }, 300);
+    }, 1000);
   }
 
   return (
@@ -96,16 +68,19 @@ const TaskItem = (props) => {
                 //classname yellowTitle is needed for highlighting importand tasks in all lists except 'Important' list
               }`}
             >
-              {props.query === "" ? props.title : highlightQueryText()}
+              {location.pathname === "/search" && query !== ""
+                ? props.title
+                : highlightQueryText(props.title, query)}
             </span>
 
-            <ul className={c.tags}>
-              {props.tags.map((t) => (
-                <Tag name={t} key={props.id + Math.random()} />
-              ))}
-            </ul>
+            <div className={`${c.startDate} ${c.date}`}>
+              {" "}
+              с {dateToStr(props.startDate)}
+            </div>
 
-            <div className={c.date}>{dateToStr()}</div>
+            <div className={`${c.endDate} ${c.date}`}>
+              до {dateToStr(props.endDate)}
+            </div>
 
             {props.isDeleted ? (
               <div className={c.btns}>
@@ -146,7 +121,7 @@ const TaskItem = (props) => {
       {
         //modal tasks (hidden by default)
       }
-      {taskModal && <NewTask closeModal={setTaskModal} currentTask={props} />}
+      {taskModal && <TaskEdit closeModal={setTaskModal} currentTask={props} />}
       {deletionModal && (
         <DeleteConfirm
           closeModal={setDeletionModal}

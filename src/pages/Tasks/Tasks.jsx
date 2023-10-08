@@ -5,43 +5,101 @@ import TaskItem from "../../components/TaskItem/TaskItem";
 import c from "./Tasks.module.css";
 
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { useLocation } from "react-router-dom";
 
-const Tasks = () => {
+const Tasks = (props) => {
+  const path = useLocation().pathname;
   const todos = useSelector((state) => state.todos.todos);
-  const filters = useSelector((state) => state.filters.filters);
 
-  const filteredTodos = todos.filter((todo) => {
-    if (filters.length === 0) {
-      return todo.isDeleted === false && todo.isDone === false;
-    } else {
-      return (
-        todo.isDeleted === false &&
-        todo.isDone === false &&
-        filters.every((tag) => todo.tags.includes(tag))
-      );
-    }
-  });
+  const [filteredTodos, setFilteredTodos] = useState([]);
 
   const [more, setMore] = useState({
     hasMore: false,
     isOpened: false,
   });
 
-  const [draggableTodos, setDraggableTodos] = useState([]);
-
   useEffect(() => {
+    switch (path) {
+      case "/deleted":
+        if (props.query) {
+          setFilteredTodos(
+            todos.filter(
+              (todo) =>
+                todo.isDeleted &&
+                todo.title.toLowerCase().includes(props.query.toLowerCase())
+            )
+          );
+        } else {
+          setFilteredTodos(todos.filter((todo) => todo.isDeleted));
+        }
+        break;
+
+      case "/done":
+        if (props.query) {
+          setFilteredTodos(
+            todos.filter(
+              (todo) =>
+                !todo.isDeleted &&
+                todo.isDone &&
+                todo.title.toLowerCase().includes(props.query.toLowerCase())
+            )
+          );
+        } else {
+          setFilteredTodos(
+            todos.filter((todo) => !todo.isDeleted && todo.isDone)
+          );
+        }
+        break;
+
+      case "/important":
+        if (props.query) {
+          setFilteredTodos(
+            todos.filter(
+              (todo) =>
+                todo.isImportant &&
+                !todo.isDeleted &&
+                !todo.isDone &&
+                todo.title.toLowerCase().includes(props.query.toLowerCase())
+            )
+          );
+        } else {
+          setFilteredTodos(
+            todos.filter(
+              (todo) => todo.isImportant && !todo.isDeleted && !todo.isDone
+            )
+          );
+        }
+        break;
+
+      default:
+        if (props.query) {
+          setFilteredTodos(
+            todos.filter(
+              (todo) =>
+                !todo.isDeleted &&
+                !todo.isDone &&
+                todo.title.toLowerCase().includes(props.query.toLowerCase())
+            )
+          );
+        } else {
+          setFilteredTodos(
+            todos.filter((todo) => !todo.isDeleted && !todo.isDone)
+          );
+        }
+        break;
+    }
+
     setMore({ ...more, hasMore: filteredTodos.length > 5 });
-    setDraggableTodos(filteredTodos);
-  }, [todos, filters]);
+  }, [path, props.query, filteredTodos.length, todos]);
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
 
-    const items = Array.from(draggableTodos);
+    const items = Array.from(filteredTodos);
     const [reorderItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderItem);
 
-    setDraggableTodos(items);
+    setFilteredTodos(items);
   }
 
   return (
@@ -56,15 +114,30 @@ const Tasks = () => {
           <Droppable droppableId="tasks">
             {(provided) => (
               <ul {...provided.droppableProps} ref={provided.innerRef}>
-                {draggableTodos.map((t, i) => {
-                  if (i <= 4) return <TaskItem {...t} key={t.id} index={i} />;
+                {filteredTodos.map((t, i) => {
+                  if (i <= 4)
+                    return (
+                      <TaskItem
+                        {...t}
+                        key={t.id}
+                        index={i}
+                        query={props.query}
+                      />
+                    );
                   return null;
                 })}
 
                 {more.isOpened &&
-                  draggableTodos.map((t, i) => {
+                  filteredTodos.map((t, i) => {
                     if (i < 5) return null;
-                    return <TaskItem key={t.id} {...t} index={i} />;
+                    return (
+                      <TaskItem
+                        key={t.id}
+                        {...t}
+                        index={i}
+                        query={props.query}
+                      />
+                    );
                   })}
                 {provided.placeholder}
               </ul>
