@@ -8,13 +8,13 @@ const todoSlice = createSlice({
   reducers: {
     addTodo(state, action) {
       state.todos.push({
-        id: (Date.now() + Math.random()).toFixed(0),
+        id: (state.todos.length + 1).toString(),
         title: action.payload.title,
         isDone: false,
         isImportant: action.payload.isImportant,
         isDeleted: false,
-        startDate: action.payload.startDate.toString(),
-        endDate: action.payload.endDate.toString(),
+        startDate: action.payload.startDate,
+        endDate: action.payload.endDate,
         description: action.payload.description,
       });
     },

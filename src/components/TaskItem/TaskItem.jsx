@@ -2,16 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { icons } from "../../icons/icons";
 import c from "./TaskItem.module.css";
-import {
-  deleteTodo,
-  hideTodo,
-  toggleIsDone,
-  undoTodo,
-} from "../../store/todoSlice";
+import { hideTodo, toggleIsDone, undoTodo } from "../../store/todoSlice";
 import { useLocation } from "react-router-dom";
-import NewTask from "../TaskEdit/TaskEdit";
+import TaskEdit from "../TaskEdit/TaskEdit";
 import DeleteConfirm from "../DeleteConfirm/DeleteConfirm";
 import { Draggable } from "react-beautiful-dnd";
+import { highlightQueryText } from "../../utils";
 
 const TaskItem = (props) => {
   let dispatch = useDispatch();
@@ -19,7 +15,7 @@ const TaskItem = (props) => {
 
   //making the task id a separate constant
   const id = props.id;
-  
+
   //Search query
   const query = props.query || "";
 
@@ -31,35 +27,9 @@ const TaskItem = (props) => {
 
   //function to convert date from state to beautiful string
   function dateToStr(date) {
-    return new Date(date).toLocaleString()
+    return new Date(date).toLocaleString();
   }
-
-  useEffect(() => {
-    
   
-    
-  }, [props.query])
-  
-
-  function highlightQueryText() {
-    const parts = props.title.split(new RegExp(`(${query})`, "gi"));
-    return (
-      <span>
-        {parts.map((part, i) => (
-          <span
-            key={i}
-            style={
-              part.toLowerCase() === query.toLowerCase()
-                ? { fontWeight: "bold" }
-                : {}
-            }
-          >
-            {part}
-          </span>
-        ))}{" "}
-      </span>
-    );
-  }
 
   //handlers
   function undoTaskHandler() {
@@ -71,9 +41,6 @@ const TaskItem = (props) => {
       dispatch(toggleIsDone({ id }));
     }, 1000);
   }
-
-
-  
 
   return (
     <section>
@@ -101,14 +68,19 @@ const TaskItem = (props) => {
                 //classname yellowTitle is needed for highlighting importand tasks in all lists except 'Important' list
               }`}
             >
-              {location.pathname === "/search" && query !== "" ? props.title : highlightQueryText()}
+              {location.pathname === "/search" && query !== ""
+                ? props.title
+                : highlightQueryText(props.title, query)}
             </span>
 
-            
+            <div className={`${c.startDate} ${c.date}`}>
+              {" "}
+              с {dateToStr(props.startDate)}
+            </div>
 
-            <div className={`${c.startDate} ${c.date}`}> с {dateToStr(props.startDate)}</div>
-
-            <div className={`${c.endDate} ${c.date}`}>до {dateToStr(props.endDate)}</div>
+            <div className={`${c.endDate} ${c.date}`}>
+              до {dateToStr(props.endDate)}
+            </div>
 
             {props.isDeleted ? (
               <div className={c.btns}>
@@ -149,7 +121,7 @@ const TaskItem = (props) => {
       {
         //modal tasks (hidden by default)
       }
-      {taskModal && <NewTask closeModal={setTaskModal} currentTask={props} />}
+      {taskModal && <TaskEdit closeModal={setTaskModal} currentTask={props} />}
       {deletionModal && (
         <DeleteConfirm
           closeModal={setDeletionModal}

@@ -5,66 +5,92 @@ import TaskItem from "../../components/TaskItem/TaskItem";
 import c from "./Tasks.module.css";
 
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Tasks = (props) => {
-  const path = useLocation().pathname
+  const path = useLocation().pathname;
   const todos = useSelector((state) => state.todos.todos);
-  const navigate = useNavigate()
-  
 
-  const [filteredTodos, setFilteredTodos] = useState([])
+  const [filteredTodos, setFilteredTodos] = useState([]);
 
   const [more, setMore] = useState({
     hasMore: false,
     isOpened: false,
   });
 
-
   useEffect(() => {
-    
     switch (path) {
-      case '/deleted':
-        setFilteredTodos(todos.filter((todo) => todo.isDeleted === true))
-        break
-      case '/done':
-        setFilteredTodos(todos.filter((todo) =>
-          todo.isDeleted === false &&
-          todo.isDone === true
-        ))
-        break
-
-      case '/important':
-        setFilteredTodos(todos.filter((todo) =>
-          todo.isImportant === true &&
-          todo.isDeleted === false &&
-          todo.isDone === false
-        ))
-        break
-
-      case '/search':
-
-        if (props.query === "") {
-          navigate('/tasks')
-          break
+      case "/deleted":
+        if (props.query) {
+          setFilteredTodos(
+            todos.filter(
+              (todo) =>
+                todo.isDeleted &&
+                todo.title.toLowerCase().includes(props.query.toLowerCase())
+            )
+          );
         } else {
-          setFilteredTodos(todos.filter((todo) => todo.title.toLowerCase().includes(props.query.toLowerCase())
-          ))
-          break
+          setFilteredTodos(todos.filter((todo) => todo.isDeleted));
         }
+        break;
+
+      case "/done":
+        if (props.query) {
+          setFilteredTodos(
+            todos.filter(
+              (todo) =>
+                !todo.isDeleted &&
+                todo.isDone &&
+                todo.title.toLowerCase().includes(props.query.toLowerCase())
+            )
+          );
+        } else {
+          setFilteredTodos(
+            todos.filter((todo) => !todo.isDeleted && todo.isDone)
+          );
+        }
+        break;
+
+      case "/important":
+        if (props.query) {
+          setFilteredTodos(
+            todos.filter(
+              (todo) =>
+                todo.isImportant &&
+                !todo.isDeleted &&
+                !todo.isDone &&
+                todo.title.toLowerCase().includes(props.query.toLowerCase())
+            )
+          );
+        } else {
+          setFilteredTodos(
+            todos.filter(
+              (todo) => todo.isImportant && !todo.isDeleted && !todo.isDone
+            )
+          );
+        }
+        break;
+
       default:
-        setFilteredTodos(todos.filter((todo) =>
-          todo.isDeleted === false &&
-          todo.isDone === false
-        )
-        )
-        break
+        if (props.query) {
+          setFilteredTodos(
+            todos.filter(
+              (todo) =>
+                !todo.isDeleted &&
+                !todo.isDone &&
+                todo.title.toLowerCase().includes(props.query.toLowerCase())
+            )
+          );
+        } else {
+          setFilteredTodos(
+            todos.filter((todo) => !todo.isDeleted && !todo.isDone)
+          );
+        }
+        break;
     }
 
-
-    setMore({ ...more, hasMore: filteredTodos.length > 5 })
-
-  }, [path, todos])
+    setMore({ ...more, hasMore: filteredTodos.length > 5 });
+  }, [path, props.query, filteredTodos.length, todos]);
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
@@ -75,7 +101,6 @@ const Tasks = (props) => {
 
     setFilteredTodos(items);
   }
-
 
   return (
     <div className={c.myTasks}>
@@ -90,14 +115,29 @@ const Tasks = (props) => {
             {(provided) => (
               <ul {...provided.droppableProps} ref={provided.innerRef}>
                 {filteredTodos.map((t, i) => {
-                  if (i <= 4) return <TaskItem {...t} key={t.id} index={i} />;
+                  if (i <= 4)
+                    return (
+                      <TaskItem
+                        {...t}
+                        key={t.id}
+                        index={i}
+                        query={props.query}
+                      />
+                    );
                   return null;
                 })}
 
                 {more.isOpened &&
                   filteredTodos.map((t, i) => {
                     if (i < 5) return null;
-                    return <TaskItem key={t.id} {...t} index={i} />;
+                    return (
+                      <TaskItem
+                        key={t.id}
+                        {...t}
+                        index={i}
+                        query={props.query}
+                      />
+                    );
                   })}
                 {provided.placeholder}
               </ul>

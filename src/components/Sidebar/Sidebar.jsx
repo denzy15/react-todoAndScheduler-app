@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 import c from "./Sidebar.module.css";
-import NewTask from "../TaskEdit/TaskEdit";
+import TaskEdit from "../TaskEdit/TaskEdit";
 import { icons } from "../../icons/icons.js";
 
 
 const Sidebar = () => {
-  const navigate = useNavigate()
 
   const [modal, setModal] = useState(false);
 
@@ -59,7 +57,7 @@ const Sidebar = () => {
           </NavLink>
         </li>
       </ul>
-      {modal && <NewTask closeModal={setModal} />}
+      {modal && <TaskEdit closeModal={setModal} />}
     </div>
   );
 };

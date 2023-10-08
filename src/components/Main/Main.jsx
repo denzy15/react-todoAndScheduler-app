@@ -6,15 +6,18 @@ import { useLocation } from "react-router-dom";
 import Searchbar from "../Searchbar/Searchbar";
 import Schedule from "../../pages/Schedule/Schedule";
 
+
+const name = {
+  "/tasks": "Мои задачи",
+  "/important": "Важные задачи",
+  "/done": "Выполенные",
+  "/deleted": "Удаленные",
+  "/search": "Результаты поиска",
+  "/schedule": "Календарь",
+};
+
 const Main = () => {
-  const name = {
-    "/tasks": "Мои задачи",
-    "/important": "Важные задачи",
-    "/done": "Выполенные",
-    "/deleted": "Удаленные",
-    "/search": "Результаты поиска",
-    "/schedule": "Календарь",
-  };
+
   const location = useLocation();
   let pathname = location.pathname;
 

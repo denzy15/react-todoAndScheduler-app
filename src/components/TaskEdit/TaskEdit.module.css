@@ -85,27 +85,6 @@
   padding: 7px 14px;
 }
 
-.tags h3 {
-  font-size: 12px;
-  line-height: 18px;
-  color: #b4b7bd;
-  margin-bottom: 15px;
-}
-
-.tagsRow {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 20%;
-  padding: 5px 0;
-}
-
-.tagsRow label {
-  flex: 0 1 40%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
 
 .date label {
   margin-bottom: 5px;
@@ -160,16 +139,4 @@ textarea.redBorder{
   .modalContainer{
     width: 100%;
   }
-
-  .tagsRow {
-      display: block;
-      padding: 5px 0;
-    }
-  
-    .tagsRow label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 17px;
-    }
 }

@@ -14,7 +14,7 @@ const initialTask = {
   startDate: new Date(),
   endDate: new Date(new Date().getTime() + 86400000),
   description: "",
-}
+};
 
 const TaskEdit = (props) => {
   const dispatch = useDispatch();
@@ -23,18 +23,12 @@ const TaskEdit = (props) => {
 
   const [task, setTask] = useState(initialTask);
 
-
-
   const [errors, setErrors] = useState({
     title: "",
-    endDate: "",
+    date: "",
   });
 
-
   const [deletionModal, setDeletionModal] = useState(false);
-
-  const [selectedStartDate, setSelectedStartDate] = useState(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState(new Date(new Date().getTime() + 86400000));
 
   useEffect(() => {
     if (props.currentTask) {
@@ -46,15 +40,12 @@ const TaskEdit = (props) => {
         endDate: new Date(currentTask.endDate),
         description: currentTask.description,
       });
-      
     }
   }, []);
 
-
   function onDateChange(date, name) {
-      setTask(prev=> ({...prev, [name]: date}))
+    setTask((prev) => ({ ...prev, [name]: date }));
   }
-
 
   function validate() {
     let isValid = true;
@@ -62,17 +53,13 @@ const TaskEdit = (props) => {
       setErrors({ ...errors, title: "Строка не должна быть пустой" });
       isValid = false;
     }
-
-    // if (
-    //   task.endDate !== null &&
-    //   task.endDate.toISOString() < new Date().toISOString()
-    // ) {
-    //   setErrors({
-    //     ...errors,
-    //     endDate: "Вы не можете выбрать день, который уже прошел",
-    //   });
-    //   isValid = false;
-    // }
+    if (task.endDate < task.startDate) {
+      setErrors({
+        ...errors,
+        date: "Дата начала не может быть позже даты окончания",
+      });
+      isValid = false;
+    }
     return isValid;
   }
 
@@ -88,7 +75,13 @@ const TaskEdit = (props) => {
         const id = currentTask.id;
         dispatch(deleteTodo({ id }));
       }
-      dispatch(addTodo({ ...task, endDate: task.endDate }));
+      dispatch(
+        addTodo({
+          ...task,
+          endDate: task.endDate.toString(),
+          startDate: task.startDate.toString(),
+        })
+      );
       setTask(initialTask);
       props.closeModal(false);
     }
@@ -126,17 +119,22 @@ const TaskEdit = (props) => {
 
           <div className={c.date}>
             <label>Дата и время начала</label>
-            <MyDatePicker name={'startDate'} change={onDateChange} selected={task.startDate}/>
-            {errors.endDate && (
-              <span className={c.error}>{errors.endDate}</span>
-            )}
+            <MyDatePicker
+              name={"startDate"}
+              change={onDateChange}
+              selected={task.startDate}
+            />
           </div>
 
-          <div className={`${c.date} ${errors.endDate && c.redBorder}`}>
+          <div className={`${c.date} ${errors.date && c.redBorder}`}>
             <label>Дата и время окончания</label>
-            <MyDatePicker name={'endDate'} change={onDateChange} selected={task.endDate}/>
-            {errors.endDate && (
-              <span className={c.error}>{errors.endDate}</span>
+            <MyDatePicker
+              name={"endDate"}
+              change={onDateChange}
+              selected={task.endDate}
+            />
+            {errors.date && (
+              <span className={c.error}>{errors.date}</span>
             )}
           </div>
           <div className={c.desc}>
@@ -152,7 +150,9 @@ const TaskEdit = (props) => {
           </div>
           <div className={c.btns}>
             <button onClick={onTaskAdd}>Добавить</button>
-            {props.currentTask && <button onClick={() => setDeletionModal(true)}>Удалить</button>}
+            {props.currentTask && (
+              <button onClick={() => setDeletionModal(true)}>Удалить</button>
+            )}
           </div>
         </div>
       </div>
