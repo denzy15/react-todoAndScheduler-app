@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/react-todo-app/static/css/main.c343156c.css",
-    "main.js": "/react-todo-app/static/js/main.226007f5.js",
-    "index.html": "/react-todo-app/index.html",
-    "main.c343156c.css.map": "/react-todo-app/static/css/main.c343156c.css.map",
-    "main.226007f5.js.map": "/react-todo-app/static/js/main.226007f5.js.map"
+    "main.css": "/react-todoAndScheduler-app/static/css/main.5fa67d93.css",
+    "main.js": "/react-todoAndScheduler-app/static/js/main.21137618.js",
+    "index.html": "/react-todoAndScheduler-app/index.html",
+    "main.5fa67d93.css.map": "/react-todoAndScheduler-app/static/css/main.5fa67d93.css.map",
+    "main.21137618.js.map": "/react-todoAndScheduler-app/static/js/main.21137618.js.map"
   },
   "entrypoints": [
-    "static/css/main.c343156c.css",
-    "static/js/main.226007f5.js"
+    "static/css/main.5fa67d93.css",
+    "static/js/main.21137618.js"
   ]
 }
